@@ -8,3 +8,7 @@ rem run psql
 
 rem ensure python27 has psycopg2
 "C:\Python27\ArcGIS10.5\Scripts\pip.exe" install psycopg2
+"C:\Python27\ArcGIS10.5\Scripts\pip.exe" install pyshp
+
+rem load crater data
+"C:\Python27\ArcGIS10.5\python.exe" cload.py %1

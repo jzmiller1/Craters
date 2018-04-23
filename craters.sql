@@ -1,9 +1,9 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
-CREATE EXTENSION postgis;
+CREATE EXTENSION IF NOT EXISTS postgis;
 CREATE TABLE obj (id uuid PRIMARY KEY DEFAULT uuid_generate_v4(), parent uuid REFERENCES obj, data json);
 CREATE TABLE naming_authority (id uuid PRIMARY KEY DEFAULT uuid_generate_v4(), authority_name VARCHAR(120), description varchar(1024));
 CREATE TABLE oname (id uuid PRIMARY KEY DEFAULT uuid_generate_v4(), name varchar (120), naming_authority UUID REFERENCES naming_authority NOT NULL, obj UUID REFERENCES obj NOT NULL); 
-CREATE TABLE observation (id uuid PRIMARY KEY DEFAULT uuid_generate_v4(), data json);
+CREATE TABLE observation (id uuid PRIMARY KEY DEFAULT uuid_generate_v4(), obj_id uuid REFERENCES obj, data json);
 CREATE TABLE source (id uuid PRIMARY KEY DEFAULT uuid_generate_v4(), url varchar);
 CREATE TABLE source_map (id uuid PRIMARY KEY DEFAULT uuid_generate_v4(),obs_id uuid REFERENCES observation, source_id uuid REFERENCES source);
 CREATE TABLE spatial_data (id uuid PRIMARY KEY DEFAULT uuid_generate_v4(), obs_id uuid REFERENCES observation, geom geometry, srid integer REFERENCES spatial_ref_sys);
